@@ -11,7 +11,6 @@ import 'package:shop_app/shared/components/constants.dart';
 import 'package:shop_app/shared/network/local/cache_helper.dart';
 
 class ShopLoginScreen extends StatelessWidget {
-
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
   var formkey = GlobalKey<FormState>();
@@ -22,15 +21,19 @@ class ShopLoginScreen extends StatelessWidget {
       create: (context) => ShopLoginCubit(),
       child: BlocConsumer<ShopLoginCubit, ShopStates>(
         listener: (context, state) {
-          if(state is ShopLoginSuccessState){
-            if(state.loginModel.status){
-              CacheHelper.saveData(key: 'token', value: state.loginModel.data!.token).then((value) {
+          if (state is ShopLoginSuccessState) {
+            if (state.loginModel.status) {
+              CacheHelper.saveData(
+                      key: 'token', value: state.loginModel.data!.token)
+                  .then((value) {
                 token = state.loginModel.data!.token;
                 print('loginToken: $token');
                 navigateAndEnd(context, ShopLayout());
               });
-            }else{
-              showToast(message: ShopLoginCubit.get(context).loginModel!.message!, state: toastStates.ERROR);
+            } else {
+              showToast(
+                  message: ShopLoginCubit.get(context).loginModel!.message!,
+                  state: toastStates.ERROR);
             }
           }
         },
@@ -112,7 +115,7 @@ class ShopLoginScreen extends StatelessWidget {
                             width: double.infinity,
                             child: MaterialButton(
                               color: Colors.blue,
-                              onPressed: (){
+                              onPressed: () {
                                 if (formkey.currentState!.validate()) {
                                   cubit.userLogin(
                                       email: emailController.text,

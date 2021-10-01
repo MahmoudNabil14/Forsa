@@ -145,8 +145,7 @@ class ShopRegisterScreen extends StatelessWidget {
                                       name: nameController.text,
                                       email: emailController.text,
                                       password: passwordController.text,
-                                      phone: phoneController.text
-                                  );
+                                      phone: phoneController.text);
                                 }
                               },
                               child: Text(

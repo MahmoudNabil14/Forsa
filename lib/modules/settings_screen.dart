@@ -35,9 +35,11 @@ class SettingsScreen extends StatelessWidget {
                     child: SingleChildScrollView(
                       child: Column(
                         children: [
-                          if(state is ShopLoadingUpdateUserState)
+                          if (state is ShopLoadingUpdateUserState)
                             LinearProgressIndicator(),
-                          SizedBox(height: 20.0,),
+                          SizedBox(
+                            height: 20.0,
+                          ),
                           defaultFormField(
                             type: TextInputType.name,
                             controller: nameController,
@@ -77,11 +79,9 @@ class SettingsScreen extends StatelessWidget {
                               }
                             },
                           ),
-
                           SizedBox(
                             height: 20.0,
                           ),
-
                           Container(
                             clipBehavior: Clip.antiAliasWithSaveLayer,
                             decoration: BoxDecoration(
@@ -91,21 +91,23 @@ class SettingsScreen extends StatelessWidget {
                             child: MaterialButton(
                               onPressed: () {
                                 if (formKey.currentState!.validate()) {
-                                  ShopCubit.get(context).updateUserData(name: nameController.text,email: emailController.text, phone: phoneController.text);
+                                  ShopCubit.get(context).updateUserData(
+                                      name: nameController.text,
+                                      email: emailController.text,
+                                      phone: phoneController.text);
                                 }
                               },
-                              child: Text('Update',
+                              child: Text(
+                                'Update',
                                 style: TextStyle(
                                   color: Colors.white,
                                 ),
                               ),
                             ),
                           ),
-
                           SizedBox(
                             height: 20.0,
                           ),
-
                           Container(
                             clipBehavior: Clip.antiAliasWithSaveLayer,
                             decoration: BoxDecoration(
@@ -114,16 +116,18 @@ class SettingsScreen extends StatelessWidget {
                             width: double.infinity,
                             child: MaterialButton(
                               onPressed: () {
-                                CacheHelper.removeData(key: 'token').then((value) {
-                                  if(value){
+                                CacheHelper.removeData(key: 'token')
+                                    .then((value) {
+                                  if (value) {
                                     navigateAndEnd(context, ShopLoginScreen());
                                   }
                                 });
                               },
-                              child: Text('Sign Out',
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),
+                              child: Text(
+                                'Sign Out',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
                           ),

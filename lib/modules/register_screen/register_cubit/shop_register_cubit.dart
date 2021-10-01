@@ -34,8 +34,7 @@ class ShopRegisterCubit extends Cubit<ShopRegisterStates>{
         },
         ).then((value) {
           loginModel = ShopLoginModel.fromJson(value.data);
-          ShopCubit()..getHomeData()..getCategoriesData()..getCategoriesData()..getUserData();
-          emit(ShopRegisterSuccessState(loginModel!));
+      emit(ShopRegisterSuccessState(loginModel!));
     }).catchError((error){
       print(error.toString());
       emit(ShopRegisterErrorState(error.toString()));

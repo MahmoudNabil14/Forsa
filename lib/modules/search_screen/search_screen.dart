@@ -5,7 +5,6 @@ import 'package:shop_app/modules/search_screen/search_cubit/shop_search_states.d
 import 'package:shop_app/shared/components/components.dart';
 
 class SearchScreen extends StatelessWidget {
-
   var formKey = GlobalKey<FormState>();
   var searchController = TextEditingController();
 
@@ -28,43 +27,52 @@ class SearchScreen extends StatelessWidget {
                         text: 'Search',
                         controller: searchController,
                         prefix: Icons.search,
-                        validate: (String value){
-                          if(value.isEmpty){
+                        validate: (String value) {
+                          if (value.isEmpty) {
                             return 'Please enter text to search';
                           }
                           return null;
                         },
-                        onSubmit: (String text){
-                          SearchCubit.get(context).search(searchController.text);
+                        onSubmit: (String text) {
+                          SearchCubit.get(context)
+                              .search(searchController.text);
                         },
-                        type: TextInputType.text
+                        type: TextInputType.text),
+                    SizedBox(
+                      height: 15.0,
                     ),
-                    SizedBox(height: 15.0,),
-
-                    if(state is ShopLoadingSearchState)
+                    if (state is ShopLoadingSearchState)
                       LinearProgressIndicator(),
-
-                    SizedBox(height: 10.0,),
-
-                    if(state is ShopSuccessSearchState)
-                    Expanded(
-                      child: ListView.separated(
-                        physics: BouncingScrollPhysics(),
-                        itemBuilder: (context, index) => buildListItem(
-                            SearchCubit.get(context).searchModel!.data.data[index],
-                            context,
-                            isOldPrice: false),
-                        separatorBuilder: (context, index) => Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                          child: Container(
-                            height: 1.0,
-                            width: double.infinity,
-                            color: Colors.grey[300],
-                          ),
-                        ),
-                        itemCount: SearchCubit.get(context).searchModel!.data.data.length,
-                      ),
+                    SizedBox(
+                      height: 10.0,
                     ),
+                    if (state is ShopSuccessSearchState)
+                      Expanded(
+                        child: ListView.separated(
+                          physics: BouncingScrollPhysics(),
+                          itemBuilder: (context, index) => buildListItem(
+                              SearchCubit.get(context)
+                                  .searchModel!
+                                  .data
+                                  .data[index],
+                              context,
+                              isOldPrice: false),
+                          separatorBuilder: (context, index) => Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 20.0),
+                            child: Container(
+                              height: 1.0,
+                              width: double.infinity,
+                              color: Colors.grey[300],
+                            ),
+                          ),
+                          itemCount: SearchCubit.get(context)
+                              .searchModel!
+                              .data
+                              .data
+                              .length,
+                        ),
+                      ),
                   ],
                 ),
               ),

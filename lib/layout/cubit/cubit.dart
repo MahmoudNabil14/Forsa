@@ -1,4 +1,3 @@
-import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_app/layout/cubit/states.dart';
@@ -35,6 +34,7 @@ class ShopCubit extends Cubit<ShopStates> {
     currentIndex = index;
     emit(ShopChangeBottomNavState());
   }
+
   HomeModel? homeModel;
 
   Map<int, bool> favorites = {};
@@ -43,8 +43,8 @@ class ShopCubit extends Cubit<ShopStates> {
     emit(ShopLoadingHomeDataState());
 
     DioHelper.getData(
-        url: HOME,
-        token: token,
+      url: HOME,
+      token: token,
     ).then((value) {
       homeModel = HomeModel.fromJson(value.data);
 
@@ -63,7 +63,7 @@ class ShopCubit extends Cubit<ShopStates> {
 
   void getCategoriesData() {
     emit(ShopLoadingCategoriesState());
-    DioHelper.getData(url: CATEGORIES,token: token).then((value) {
+    DioHelper.getData(url: CATEGORIES, token: token).then((value) {
       categoriesModel = CategoriesModel.fromJson(value.data);
       emit(ShopSuccessCategoriesState());
     }).catchError((error) {
@@ -76,7 +76,7 @@ class ShopCubit extends Cubit<ShopStates> {
 
   void getUserData() {
     emit(ShopLoadingUserDataState());
-    DioHelper.getData(url: PROFILE,token: token).then((value) {
+    DioHelper.getData(url: PROFILE, token: token).then((value) {
       userModel = ShopLoginModel.fromJson(value.data);
       emit(ShopSuccessUserDataState());
     }).catchError((error) {
@@ -89,15 +89,12 @@ class ShopCubit extends Cubit<ShopStates> {
     required String name,
     required String email,
     required String phone,
-}) {
+  }) {
     emit(ShopLoadingUpdateUserState(userModel!));
-    DioHelper.putData(
-        url: UPDATE_PROFILE,
-        token: token,
-        data: {
-          "name": name,
-          "email":email,
-          "phone":phone,
+    DioHelper.putData(url: UPDATE_PROFILE, token: token, data: {
+      "name": name,
+      "email": email,
+      "phone": phone,
     }).then((value) {
       userModel = ShopLoginModel.fromJson(value.data);
       emit(ShopSuccessUpdateUserState());
@@ -111,7 +108,7 @@ class ShopCubit extends Cubit<ShopStates> {
 
   void getFavoritesData() {
     emit(ShopLoadingFavoritesState());
-    DioHelper.getData(url: FAVORITES,token: token).then((value) {
+    DioHelper.getData(url: FAVORITES, token: token).then((value) {
       favoritesModel = FavoritesModel.fromJson(value.data);
       emit(ShopSuccessFavoritesState());
     }).catchError((error) {
@@ -134,10 +131,9 @@ class ShopCubit extends Cubit<ShopStates> {
             token: token)
         .then((value) {
       changeFavoritesModel = ChangeFavoritesModel.fromJson(value.data);
-      if (changeFavoritesModel!.status == false ) {
+      if (changeFavoritesModel!.status == false) {
         favorites[productId] = !favorites[productId]!;
-      }
-      else{
+      } else {
         getFavoritesData();
       }
       emit(ShopSuccessChangeFavoritesState(changeFavoritesModel!));

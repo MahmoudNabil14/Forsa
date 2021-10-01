@@ -8,37 +8,36 @@ import 'package:shop_app/modules/login_screen/login_cubit/shop_login_states.dart
 import 'package:shop_app/shared/network/end_points.dart';
 import 'package:shop_app/shared/network/shared/dio_helper.dart';
 
-class ShopLoginCubit extends Cubit<ShopStates>{
-  ShopLoginCubit () : super (ShopLoginInitialState());
-  static ShopLoginCubit get(context)=> BlocProvider.of(context);
-  bool isPassword =true ;
-  IconData suffix  = Icons.visibility_outlined;
-  ShopLoginModel ? loginModel;
+class ShopLoginCubit extends Cubit<ShopStates> {
+  ShopLoginCubit() : super(ShopLoginInitialState());
 
-  void userLogin({
-    required String email,
-    required String password
-  })
-  {
+  static ShopLoginCubit get(context) => BlocProvider.of(context);
+  bool isPassword = true;
+
+  IconData suffix = Icons.visibility_outlined;
+  ShopLoginModel? loginModel;
+
+  void userLogin({required String email, required String password}) {
     emit(ShopLoginLoadingState());
     DioHelper.postData(
-        url: LOGIN,
-        data: {
-          'email':email,
-          'password':password,
-        },
-        ).then((value) {
-          loginModel = ShopLoginModel.fromJson(value.data);
-          emit(ShopLoginSuccessState(loginModel!));
-    }).catchError((error){
+      url: LOGIN,
+      data: {
+        'email': email,
+        'password': password,
+      },
+    ).then((value) {
+      loginModel = ShopLoginModel.fromJson(value.data);
+      emit(ShopLoginSuccessState(loginModel!));
+    }).catchError((error) {
       print(error.toString());
       emit(ShopLoginErrorState(error.toString()));
     });
   }
 
-  void changeSuffix(){
+  void changeSuffix() {
     isPassword = !isPassword;
-    suffix = isPassword ? Icons.visibility_outlined : Icons.visibility_off_outlined;
+    suffix =
+        isPassword ? Icons.visibility_outlined : Icons.visibility_off_outlined;
     emit(ShopChangeLoginSuffixState());
   }
 }

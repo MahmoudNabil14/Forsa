@@ -4,22 +4,21 @@ import 'package:shop_app/modules/search_screen/search_cubit/shop_search_states.d
 import 'package:shop_app/shared/network/end_points.dart';
 import 'package:shop_app/shared/network/shared/dio_helper.dart';
 
-class SearchCubit extends Cubit<SearchStates>{
-
+class SearchCubit extends Cubit<SearchStates> {
   SearchCubit() : super(ShopInitialSearchState());
 
-  static SearchCubit get(context)=> BlocProvider.of(context);
+  static SearchCubit get(context) => BlocProvider.of(context);
 
-  SearchModel? searchModel ;
+  SearchModel? searchModel;
 
-  void search(String text){
+  void search(String text) {
     emit(ShopLoadingSearchState());
     DioHelper.searchData(url: SEARCH, data: {
-      'text':text,
+      'text': text,
     }).then((value) {
       searchModel = SearchModel.fromJson(value.data);
       emit(ShopSuccessSearchState());
-    }).catchError((error){
+    }).catchError((error) {
       print(error.toString());
       emit(ShopErrorSearchState());
     });

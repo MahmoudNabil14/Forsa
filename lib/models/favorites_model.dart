@@ -6,13 +6,13 @@ class FavoritesModel {
   FavoritesModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
-    data =  Data.fromJson(json['data']);
+    data = Data.fromJson(json['data']);
   }
 }
 
 class Data {
   int? currentPage;
-  List<FavoriteData> data  = [];
+  List<FavoriteData> data = [];
   String? firstPageUrl;
   int? from;
   int? lastPage;
@@ -23,7 +23,6 @@ class Data {
   String? prevPageUrl;
   int? to;
   int? total;
-
 
   Data.fromJson(Map<String, dynamic> json) {
     currentPage = json['current_page'];
@@ -43,19 +42,16 @@ class Data {
     to = json['to'];
     total = json['total'];
   }
-
 }
 
 class FavoriteData {
   late int id;
   late Product product;
 
-
   FavoriteData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    product =  Product.fromJson(json['product']);
+    product = Product.fromJson(json['product']);
   }
-
 }
 
 class Product {
@@ -67,8 +63,6 @@ class Product {
   late String name;
   late String description;
 
-
-
   Product.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     price = json['price'];
@@ -78,7 +72,4 @@ class Product {
     name = json['name'];
     description = json['description'];
   }
-
 }
-
-
